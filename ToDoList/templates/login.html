@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+<style>
+    
+ 
+</style>
+{% block content %}
+<h1>Login Page</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{form}}
+    <input class="btn btn-success" type="submit" value="Submit" name="Create Task" style="margin-top: 10px;">
+</form> <br />
+<p id=>Don't have an account? <a href="{% url 'register' %}">Register</a> here</p>
+
+{% endblock %}

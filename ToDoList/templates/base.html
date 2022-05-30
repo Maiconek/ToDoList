@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>ToDoList</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    </head>
+    <style>
+        body {
+            background-color: #6CB4EE;
+        }
+        
+        .center-column {
+            max-width: 550px;
+            margin: auto;
+            border: 2px solid whitesmoke;
+            border-radius: 3px;
+            padding: 10px;
+            background-color: white;
+            margin-top: 50px;
+            box-shadow: 6px 2px 30px 0px rgba(0,0,0,0.75);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 12px;
+        }
+
+        .list {
+            background-color: #662d91;
+            border: 2px solid #662d91;
+            border-radius: 10px;
+            color: white;
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 24px;
+            box-shadow: 0px -1px 10px -4px rgba(0,0,0,0.75);
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        .tdl {
+            float: left;
+        }
+
+        
+    </style>
+    <body>
+        <div class='center-column'>
+            {% block content %}
+            {% if request.user.is_authenticated %}
+            <h1 class='tdl'>ToDoList -> {{request.user}}</h1>
+            <a class="btn btn-danger" href="{% url 'logout' %}" style="float: right; margin-top: 4px";>Logout</a>
+
+            <form method = "POST" action="/">
+                {% csrf_token %}
+                {{form.title}}
+                <input class="btn btn-success" type="submit" value="Submit" name="Create Task" style="margin-top: 10px;">
+            </form>
+            
+            <div class="content">
+            {% for tsk in tasks %}
+                    <div class="list">
+                    {% if tsk.finished == True %}
+                        <strike>{{tsk.title}}</strike>
+                    {% else %}
+                        <span>{{tsk.title}}</span> 
+                    {% endif %}
+                    <a class="btn btn-primary" href="{% url 'update' tsk.id %}" >Update</a>
+                    <a class="btn btn-warning" href="{% url 'delete' tsk.id %}" onclick="return confirm('Are you sure you want to delete {{tsk.title}}?')">Delete</a>
+                
+                </div>
+            {% endfor %}
+            {% else %}
+                <div class="login" style="text-align: center; font-size: 20px;">
+                    <p>Please log-in or register if you want to use the app</p>
+                    <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+                    <a class="btn btn-secondary" href="{% url 'register' %}">Register</a>
+                </div>
+            {% endif %}
+            </div>
+            {% endblock %}
+        </div>
+    </body>
+
+</html>

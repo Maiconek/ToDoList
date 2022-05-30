@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+<style>
+    
+    
+    .center-column {
+        max-width: 550px;
+        margin: auto;
+        border: 2px solid whitesmoke;
+        border-radius: 3px;
+        padding: 10px;
+        background-color: white;
+        margin-top: 50px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px 12px;
+    }
+
+    form {
+        margin-top: 25px;
+    }
+</style>
+
+{% block content %}
+<h1>Update task</h1>
+
+<form method = "POST" action=""">
+    {% csrf_token %}
+    {{form}}
+    <input class="btn btn-success" type="submit" value="Submit" name="Create Task" style="margin-top: 10px;">
+</form>
+
+{% endblock %}
